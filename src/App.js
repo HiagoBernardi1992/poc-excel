@@ -29,6 +29,23 @@ function App() {
     })
   }
 
+  const saveFiles = () => {
+    debugger;
+    if (itens.length > 0) {
+      itens.forEach(function (i) {
+        const requestOptions = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ data: {item: i.Item, Description: i.Description} })
+        };
+        console.log('body', requestOptions.body)
+        fetch('http://localhost:1337/api/excel-datas', requestOptions)
+        .then(response => console.log('response', response))
+        .then(data => console.log('data', data))
+      });
+    }
+  }
+
   return (
     <>
       <div className='container-fluid'>
@@ -55,12 +72,15 @@ function App() {
                   <td>{d.Item}</td>
                   <td>{d.Description}</td>
                   <td>
-                    <img src={d.Image} class="img-thumbnail img-table-size" alt="Charizard" />
+                    <img src={d.Image} className="img-thumbnail img-table-size" alt="Charizard" />
                   </td>
                 </tr>
               ))}
           </tbody>
         </table>
+        <div className='App'>
+          <button type="button" className="btn btn-primary" onClick={saveFiles}>Salvar</button>
+        </div>
       </div>
     </>
 
